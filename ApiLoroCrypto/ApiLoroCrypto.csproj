@@ -25,7 +25,6 @@
     <Folder Include="Core\Mapper\" />
     <Folder Include="Core\Helper\" />
     <Folder Include="Core\Services\" />
-    <Folder Include="Repository\Interfaces\" />
   </ItemGroup>
 
 </Project>
