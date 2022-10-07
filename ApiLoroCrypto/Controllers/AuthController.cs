@@ -1,5 +1,6 @@
 ﻿using ApiLoroCrypto.Core.Dto;
 using ApiLoroCrypto.Core.Services;
+using ApiLoroCrypto.Core.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,9 +10,9 @@ namespace ApiLoroCrypto.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly AuthService _service;
+        private readonly IAuthService _service;
 
-        public AuthController(AuthService service)
+        public AuthController(IAuthService service)
         {
             _service = service;
         }
