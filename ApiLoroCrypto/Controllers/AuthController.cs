@@ -1,6 +1,8 @@
 ﻿using ApiLoroCrypto.Core.Dto;
+using ApiLoroCrypto.Core.DTO;
 using ApiLoroCrypto.Core.Services;
 using ApiLoroCrypto.Core.Services.Interfaces;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +13,12 @@ namespace ApiLoroCrypto.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _service;
+        private readonly IMapper _mapper;
 
-        public AuthController(IAuthService service)
+        public AuthController(IAuthService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
         [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDto dto)
@@ -40,7 +44,7 @@ namespace ApiLoroCrypto.Controllers
             var token = _service.Gettoken(user);
             return Ok(new
             {
-                user = user,
+                user = _mapper.Map<UserDto>(user),
                 token = token
             });
         }

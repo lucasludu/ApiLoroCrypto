@@ -14,6 +14,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(Options => {
 });
 builder.Services.AddScoped<IUnitofWork, UnitOfWork>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
 builder.Services.AddControllers();
