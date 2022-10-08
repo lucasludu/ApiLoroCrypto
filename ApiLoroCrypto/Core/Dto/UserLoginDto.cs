@@ -4,6 +4,7 @@ namespace ApiLoroCrypto.Core.Dto
 {
     public class UserLoginDto
     {
+        [EmailAddress]
         [Required(ErrorMessage = "Email is Required")]
         public string Email { get; set; }
 
