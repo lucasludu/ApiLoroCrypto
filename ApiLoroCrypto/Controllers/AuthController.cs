@@ -16,7 +16,7 @@ namespace ApiLoroCrypto.Controllers
         {
             _service = service;
         }
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(UserRegisterDto dto)
         {
             var user = await _service.Register(dto); 
@@ -28,6 +28,21 @@ namespace ApiLoroCrypto.Controllers
             return Ok(user);
         }
 
-
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login([FromBody] UserLoginDto userLoginDto)
+        {
+            var user = await _service.Login(userLoginDto);
+            if (user == null)
+            {
+                return Unauthorized();
+            }
+           
+            var token = _service.Gettoken(user);
+            return Ok(new
+            {
+                user = user,
+                token = token
+            });
+        }
     }
 }

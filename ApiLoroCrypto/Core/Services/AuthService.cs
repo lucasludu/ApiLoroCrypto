@@ -49,9 +49,26 @@ namespace ApiLoroCrypto.Core.Services
             return tokenHandler.WriteToken(token);
         }
 
-        public Task<User> Login(UserLoginDto dto)
+        public async Task<User> Login(UserLoginDto dto)
         {
-            throw new NotImplementedException();
+            var userExist = await _unitOfWork.UserRepository.ExistUser(dto.Email);
+            if (userExist != null)
+            {
+                var user = await _unitOfWork.UserRepository.GetByEmail(dto.Email);
+                if (user != null)
+                {
+
+
+                    var validateUser = ApiHelper.ValidateUser(user, dto.Password);
+                    if (validateUser == null)
+                    {
+                        return null;
+                    }
+                    return validateUser;
+                }
+
+            }
+            return null;
         }
 
         public async Task<string> Register(UserRegisterDto dto)
