@@ -44,17 +44,19 @@ namespace ApiLoroCrypto.Core.Services
 
         public async Task<User> Update(int id, UserUpdateDto dto)
         {
-            var existing = await _unitOfWork.UserRepository.GetById(id);
-            if(existing == null)
+            var existingUser = await _unitOfWork.UserRepository.GetById(id);
+            if (existingUser == null)
             {
                 return null;
             }
-            var user = _mapper.Map<User>(existing);
+            else
+            {
+                _mapper.Map(dto, existingUser);
+                _unitOfWork.UserRepository.Update(existingUser);
+                await _unitOfWork.SaveChangesAsync();
 
-            _unitOfWork.UserRepository.Update(user);
-            await _unitOfWork.SaveChangesAsync();
-
-            return user;
+                return existingUser;
+            }
         }
     }
 }
